@@ -8,6 +8,10 @@ View the [docs][].
 
 ## Usage
 
+```go
+import "github.com/go-libs/progress"
+```
+
 
 ### Write bytes in progress
 
