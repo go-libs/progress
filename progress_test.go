@@ -10,7 +10,7 @@ import (
 )
 import "testing"
 
-func TestNew(t *testing.T) {
+func TestNewWriter(t *testing.T) {
 	p := NewWriter()
 	zero := int64(0)
 	assert.Equal(t, zero, p.Current)
@@ -18,7 +18,7 @@ func TestNew(t *testing.T) {
 	assert.Equal(t, zero, p.Expected)
 }
 
-func TestProgress(t *testing.T) {
+func TestProgressWriter(t *testing.T) {
 	filename := "progress_test.go"
 	f, err := os.Open(filename)
 	defer f.Close()
