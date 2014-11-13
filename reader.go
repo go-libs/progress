@@ -4,8 +4,8 @@ import "io"
 
 type ProgressReader struct {
 	Current, Total, Expected int64
-	Progress                 func(current, total, expected int64)
 	Finished                 bool
+	Progress                 func(current, total, expected int64)
 }
 
 func (p *ProgressReader) Read(b []byte) (n int, err error) {
