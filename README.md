@@ -66,7 +66,6 @@ p := Progress.NewReader()
 p.Total = fs.Size()
 p.Progress = func(current, total, expected int64) {
   log.Println("Reading", current, total, expected)
-  assert.Equal(t, true, current <= total)
 }
 
 b := new(bytes.Buffer)
