@@ -5,10 +5,11 @@ import (
 	"io"
 	"log"
 	"os"
+	"testing"
 
 	"github.com/bmizerany/assert"
+	"github.com/go-libs/syncreader"
 )
-import "testing"
 
 func TestNewWriter(t *testing.T) {
 	p := NewWriter()
@@ -33,7 +34,7 @@ func TestProgressWriter(t *testing.T) {
 	p := NewWriter()
 	p.Total = fs.Size()
 	p.Progress = func(current, total, expected int64) {
-		log.Println(current, total, expected)
+		log.Println("Writing", current, total, expected)
 		assert.Equal(t, true, current <= total)
 	}
 
@@ -43,4 +44,41 @@ func TestProgressWriter(t *testing.T) {
 	if err != nil {
 		log.Fatalln(err)
 	}
+	assert.Equal(t, fs.Size(), int64(b.Len()))
+}
+
+func TestNewReader(t *testing.T) {
+	p := NewReader()
+	zero := int64(0)
+	assert.Equal(t, zero, p.Current)
+	assert.Equal(t, zero, p.Total)
+	assert.Equal(t, zero, p.Expected)
+}
+
+func TestProgressReader(t *testing.T) {
+	filename := "progress_test.go"
+	f, err := os.Open(filename)
+	defer f.Close()
+	if err != nil {
+		log.Fatalln(err)
+	}
+	fs, err := os.Stat(filename)
+	if err != nil {
+		log.Fatalln(err)
+	}
+
+	p := NewReader()
+	p.Total = fs.Size()
+	p.Progress = func(current, total, expected int64) {
+		log.Println("Reading", current, total, expected)
+		assert.Equal(t, true, current <= total)
+	}
+
+	b := new(bytes.Buffer)
+	r := syncreader.New(f, p)
+	_, err = b.ReadFrom(r)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	assert.Equal(t, fs.Size(), int64(b.Len()))
 }
