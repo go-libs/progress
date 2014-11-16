@@ -1,7 +1,7 @@
 
 # progress
 
-Making a progress for `Reader` or `Writer`.
+Making a progress for `Reader` or `Writer` write/read bytes.
 
 View the [docs][].
 
@@ -29,10 +29,10 @@ if err != nil {
   log.Fatalln(err)
 }
 
-p := Progress.NewWriter()
+p := Progress.New()
 p.Total = fs.Size()
 p.Progress = func(current, total, expected int64) {
-  log.Println(current, total, expected)
+  log.Println("Writing", current, total, expected)
 }
 
 b := new(bytes.Buffer)
@@ -62,7 +62,7 @@ if err != nil {
   log.Fatalln(err)
 }
 
-p := Progress.NewReader()
+p := Progress.New()
 p.Total = fs.Size()
 p.Progress = func(current, total, expected int64) {
   log.Println("Reading", current, total, expected)
