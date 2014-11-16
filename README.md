@@ -77,5 +77,16 @@ if err != nil {
 ```
 
 
+### Using `IgnoreTotal` flag to ignore total size in `Progress` initialization.
+
+```go
+p := Progress.New()
+p.IgnoreTotal = true
+p.Progress = func(current, total, expected int64) {
+  log.Println("Reading", current, total, expected)
+}
+```
+
+
 [docs]: http://godoc.org/github.com/go-libs/progress
 
