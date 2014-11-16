@@ -37,7 +37,7 @@ func (p *Progress) handle(b []byte) (n int, err error) {
 }
 
 func (p *Progress) calculate(n int64) {
-	p.Current += int64(n)
+	p.Current += n
 	p.Expected = p.Total - p.Current
 	if !p.IgnoreTotal && p.Expected < 0 {
 		p.Current = p.Total
