@@ -12,9 +12,9 @@ type Progress struct {
 	Current     int64
 	Total       int64
 	Expected    int64
-	Progress    HandlerFunc
 	Finished    bool
 	IgnoreTotal bool
+	Progress    HandlerFunc
 }
 
 func (p *Progress) Read(b []byte) (n int, err error) {
