@@ -4,9 +4,8 @@ type HandlerFunc func(current, total, expected int64)
 
 var DefaultHandle = HandlerFunc(func(c, t, e int64) {})
 
-func New() (p *Progress) {
-	p = &Progress{Progress: DefaultHandle}
-	return
+func New() *Progress {
+	return &Progress{Progress: DefaultHandle}
 }
 
 type Progress struct {
